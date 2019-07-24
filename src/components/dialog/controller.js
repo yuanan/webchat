@@ -1,5 +1,9 @@
+import svgSend from '@/svg/send.vue';
+
 export default {
-  components: {},
+  components: {
+    svgSend
+  },
   data() {
     return {
       isShow: false
