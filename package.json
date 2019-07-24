@@ -1,0 +1,29 @@
+{
+  "name": "webchat",
+  "version": "0.1.0",
+  "scripts": {
+    "serve": "vue-cli-service serve --mode development",
+    "buildspa": "vue-cli-service build --mode production",
+    "build": "vue-cli-service build --mode production --target lib --name webchat ./src/main.js && node ./scripts/demo.js"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-service": "^3.9.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
