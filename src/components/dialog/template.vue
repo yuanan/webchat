@@ -5,9 +5,20 @@
         你正在与<span class="server-name"> 客服001 </span>聊天
       </div>
     </div>
+    <div class="message-content-area" ref="content">
+      <div class="message-list">
+        <ul>
+          <li :class="i.type" v-for="(i, index) in messages" :key="index">
+            <div class="message-content">
+              {{i.content}}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="message-area">
-      <textarea name="message" id="message" aria-label="写些什么..."></textarea>
-      <div class="btn-send">
+      <textarea name="message" id="message" placeholder="写些什么..." v-model="content"></textarea>
+      <div class="btn-send" @click="sendMsg">
         <svg-send></svg-send>
       </div>
     </div>

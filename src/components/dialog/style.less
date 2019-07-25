@@ -30,6 +30,74 @@
     }
   }
 
+  .message-content-area {
+    height: calc(~"100% - 132px");
+    overflow: auto;
+    overflow: overlay;
+    transition: all 0.3s;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      width: 8px;
+      background: #e2e2e2;
+    }
+
+    .message-list {
+      padding: 24px;
+      box-sizing: border-box;
+
+      ul {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+
+        li {
+          &::after {
+            clear: both;
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            visibility: hidden;
+          }
+
+          margin-bottom: 8px;
+          width: 100%;
+
+          .message-content {
+            padding: 17px 20px;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+            position: relative;
+            display: inline-block;
+            background-color: red;
+            max-width: 80%;
+            word-wrap: break-word;
+          }
+
+          &.other {
+            .message-content {
+              background-color: rgb(245, 245, 245);
+            }
+          }
+
+          &.me {
+            .message-content {
+              background-color: rgb(75, 28, 217);
+              color: #fff;
+              float: right;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .message-area {
     position: absolute;
     bottom: 0px;
@@ -59,10 +127,15 @@
       font-size: 14px;
       font-weight: normal;
       line-height: 1.33;
-      background-color: rgb(255, 255, 255);
+      background-color: #fafafa;
       white-space: pre-wrap;
       overflow-wrap: break-word;
       padding: 18px 100px 18px 29px;
+
+      &:focus {
+        background-color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 100px 0px;
+      }
     }
 
     .btn-send {
