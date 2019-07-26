@@ -1,4 +1,5 @@
-.dialog {
+.webchat-dialog {
+  font-family: "Poppins", Arial, sans-serif;
   z-index: 2147483000;
   position: fixed;
   bottom: 20px;
@@ -7,6 +8,7 @@
   min-height: 250px;
   max-height: 704px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 40px;
+  background-color: #ffffff;
   opacity: 1;
   height: calc(100% - 120px);
   border-radius: 8px;
@@ -17,7 +19,7 @@
     min-height: 75px;
     color: white;
     transition: height 160ms ease-out 0s;
-    background: linear-gradient(135deg, rgb(75, 28, 217) 0%, rgb(44, 16, 127) 100%);
+    background: linear-gradient(135deg, @mainColor 0%, rgb(44, 16, 127) 100%);
 
     .title {
       padding: 25px;
@@ -28,13 +30,21 @@
         font-weight: bold;
       }
     }
+
+    .btn-close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
   }
 
   .message-content-area {
+    position: relative;
+    //-webkit-overflow-scrolling: touch;
+    background-color: #ffffff;
     height: calc(~"100% - 132px");
     overflow: auto;
-    overflow: overlay;
-    transition: all 0.3s;
+    z-index: 2000000;
 
     &::-webkit-scrollbar {
       width: 8px;
@@ -88,7 +98,7 @@
 
           &.me {
             .message-content {
-              background-color: rgb(75, 28, 217);
+              background-color: @mainColor;
               color: #fff;
               float: right;
             }
@@ -150,6 +160,12 @@
       padding-left: 8px;
       padding-right: 8px;
       transition: opacity 200ms ease 0s;
+
+      svg {
+        path {
+          fill: @mainColor;
+        }
+      }
     }
   }
 }

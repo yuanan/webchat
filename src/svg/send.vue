@@ -6,9 +6,5 @@
 svg {
   height: 16px;
   width: 15px;
-  
-  path {
-    fill: rgb(75, 28, 217);
-  }
 }
 </style>
