@@ -1602,7 +1602,7 @@ pomeloClient_require.register('pomelonode-pomelo-jsclient-websocket/lib/pomelo-c
       }
 
       this.emit('__CLIENT_RESPONSE', msg.body)
-      this.log && console.log('%c收到消息: ', 'color: #DFC149;border: 1px solid #ccc', msg.body)
+      this.log && console.log('%c收到消息: ', 'color: #DFC149;border: 1px solid #ccc', msg.body, msg.id)
       cb(msg.body)
     }
 

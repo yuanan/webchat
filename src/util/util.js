@@ -159,4 +159,24 @@ util.cookie.remove = function (name, domain, path, secure) {
   this.set(name, "", Date(0), domain, path, secure);
 }
 
+util.max = function(n1, n2) {
+  n1 = Number(n1);
+  n2 = Number(n2);
+  if (n1 > n2) {
+    return n1;
+  } else {
+    return n2;
+  }
+}
+
+util.min = function(n1, n2) {
+  n1 = Number(n1);
+  n2 = Number(n2);
+  if (n1 < n2) {
+    return n1;
+  } else {
+    return n2;
+  }
+}
+
 export default util;

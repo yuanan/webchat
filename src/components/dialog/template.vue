@@ -20,7 +20,7 @@
     </div>
     <div class="message-area" @touchstart="focus">
       <textarea ref="message" name="message" id="message" placeholder="写些什么..." v-model="content"></textarea>
-      <div class="btn-send" @click="sendMsg">
+      <div class="btn-send" @click="onSendMsg">
         <svg-send></svg-send>
       </div>
     </div>

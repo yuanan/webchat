@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "flyio": "^0.6.14",
     "pomelo-client-websocket": "^1.0.13",
     "pomelo-jsclient-websocket": "^0.1.1",
     "vue": "^2.6.10"
