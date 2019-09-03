@@ -12,7 +12,13 @@
       <strong>We're sorry but webchat doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
-    <button onclick="webchat.dialog.show({receiver: {roleId: '125930', uid: '105909'}})">显示聊天窗口</button>
+    <button onclick="thindoWebChat.dialog.show({receiver: {roleId: '125930', uid: '105909', nickName: '金正恩'}})">显示聊天窗口</button>
     <!-- built files will be auto injected -->
   </body>
+  <script>
+    (function() {
+      // 初始化
+      thindoWebChat.init();
+    })();
+  </script>
 </html>

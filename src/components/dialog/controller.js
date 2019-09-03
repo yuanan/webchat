@@ -1,6 +1,7 @@
 import svgSend from '@/svg/send';
 import svgClose from '@/svg/close';
 import util from '@/util/util';
+import store from '@/lib/store';
 
 export default {
   components: {
@@ -13,49 +14,26 @@ export default {
       isShow: false,
       state: 1, // 1 待发送状态 2 输入中状态
       content: '',
-      messages: [{
-        type: 'me',
-        content: 'h1'
-      }, {
-        type: 'me',
-        content: 'h1'
-      }, {
-        type: 'me',
-        content: 'h1'
-      }, {
-        type: 'me',
-        content: 'h1'
-      }, {
-        type: 'other',
-        content: 'h1'
-      }, {
-        type: 'other',
-        content: 'h1'
-      }, {
-        type: 'other',
-        content: 'h1'
-      }, {
-        type: 'me',
-        content: 'h1'
-      }, {
-        type: 'me',
-        content: 'h1'
-      }, {
-        type: 'me',
-        content: 'h1'
-      }]
+      messages: [],
+      receiver: {},
+      cid: '',
+      lid: ''
+    }
+  },
+
+  watch: {
+    messages(val) {
+      console.log('消息在变化。');
+      // 覆盖到本地
+      if (this.lid && this.cid) {
+        store.set(this.lid, val);
+      }
     }
   },
 
   mounted() {
-    console.log(this.pomelo);
+    // 监听消息
     this.pomelo.pemelo.on('onMessage', this.getMsg);
-    // let data = await pomelo.request(
-    //   'gate.gateHandler.queryEntry',
-    //   {
-    //     "uid": 120445
-    //   }
-    // );
   },
 
   methods: {
@@ -68,15 +46,37 @@ export default {
       });
     },
 
+    /**
+     * 显示聊天窗口
+     * @param {*} options 
+     */
     show(options) {
-      this.receiver = options.receiver || {};
-      this.isShow = true;
-      console.log(this.pomelo.pemelo.on);
+      try {
+        this.receiver = options.receiver || {};
+        this.isShow = true;
+        // 获取本地存储的数据
+        this.getMessages();
+        this.toBottom();
+        document.body.addEventListener('contextmenu', function (e) {
+          e.preventDefault();
+        });
+      } catch (error) {
+        alert(JSON.stringify(error));
+      }
+    },
 
-      this.toBottom();
-      document.body.addEventListener('contextmenu', function (e) {
-        e.preventDefault();
-      });
+    /**
+     * 获取本地存储的数据
+     */
+    getMessages() {
+      let fromUser = this.userInfo;
+      let toUser = this.receiver;
+      // 生成通道id
+      this.cid = `CHANNEL_P2P_${util.min(fromUser.id, toUser.roleId)}-${util.max(fromUser.id, toUser.roleId)}_${util.min(toUser.uid, fromUser.uid)}_${util.max(toUser.uid, fromUser.uid)}`;
+      // 获取存储在本地的消息
+      this.lid = `thindo.webchat.messages_${this.cid}`;
+      let messages = store.get(this.lid) || [];
+      this.messages = messages;
     },
 
     hide() {
@@ -112,8 +112,18 @@ export default {
           type: 'other',
           content: data.content.body.text
         });
+        this.serverBack(data.content);
         this.toBottom();
       }
+    },
+
+    /**
+     * 收到对方消息告诉服务器
+     */
+    async serverBack(msg) {
+      let data = await this.pomelo.request('chat.chatHandler.updateReadFlag', {
+        msgids: [msg.tempID]
+      });
     },
 
     /**
@@ -138,11 +148,11 @@ export default {
             text: this.content,
             type: 1
           },
-          cid: `CHANNEL_P2P_${util.min(fromUser.id, toUser.roleId)}-${util.max(fromUser.id, toUser.roleId)}_${util.min(toUser.uid, fromUser.uid)}_${util.max(toUser.uid, fromUser.uid)}`,
+          cid: this.cid,
           sender: {
             avatar: this.userInfo.img_path,
             interestID: this.iid,
-            interestName: "话嬉游",
+            interestName: "",
             label: "",
             level: 1,
             nick_name: this.userInfo.nickname,

@@ -1,25 +1,31 @@
 import request from '@/lib/request';
-import store from '@/lib/store';
+import util from '@/util/util';
 
 /**
  * 获取用户信息
  */
-async function getUser() {
+async function getUser(userId, iid = 1000) {
   return new Promise((resolve, reject) => {
-    let userInfo = store.get('userInfo');
-    console.log('store', userInfo);
+    let userInfo = util.cookie.get('userInfo');
+    let url = '';
+    if (userId) {
+      url = `http://yun.huaxiyou.cc/getUserInfo?userId=${userId}&iid=${iid}`;
+    } else {
+      url = `http://yun.huaxiyou.cc/getUserInfo?uniqId=1&iid=${iid}`;
+    }
     if (userInfo) {
       resolve(userInfo);
     } else {
       request(
         'get',
-        'http://yun.huaxiyou.cc/getUserInfo?uniqId=1', {},
+        url,
+        {},
         function (res) {
           if (res.code === 0) {
-            store.set('userInfo', res.t);
+            util.cookie.set('userInfo', res.t, (new Date().getTime() + 0.5*24*60*60*1000));
             resolve(res.t);
           } else {
-            store.set('userInfo', '');
+            util.cookie.set('userInfo', '', 1000);
             reject(res.msg);
           }
         },

@@ -2,8 +2,7 @@
   <div class="webchat-dialog" v-if="isShow" ref="dialog">
     <div class="head">
       <div class="title">
-        你正在与
-        <span class="server-name">客服001</span>聊天
+        你正在与 <span class="server-name">{{ receiver.nickName }}</span> 聊天
       </div>
       <div class="btn-close" @click="hide">
         <svg-close></svg-close>

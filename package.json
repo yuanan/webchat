@@ -4,7 +4,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --mode development",
     "buildspa": "vue-cli-service build --mode production",
-    "build": "vue-cli-service build --mode production --target lib --name webchat ./src/main.js && node ./scripts/demo.js"
+    "build": "vue-cli-service build --mode production --target lib --name webchat ./src/main.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",

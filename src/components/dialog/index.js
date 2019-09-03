@@ -2,13 +2,17 @@ import template from './template';
 import util from '@/util/util';
 
 export default {
-  install(Vue, pkg) {
+  install(Vue, pkg, data) {
     if (!pkg.dialog) pkg.dialog = {};
     let el = util.createDiv();
-    pkg.dialog = new Vue(
-      Object.assign(template, {
-        el: `#${el.id}`
-      }
-    ));
+    let tempData = template.data();
+    let dataFn = function() {
+      return Object.assign(tempData, data);
+    }
+    template.data = dataFn;
+    let object = Object.assign(template, {
+      el: `#${el.id}`
+    });
+    pkg.dialog = new Vue(object);
   }
 }

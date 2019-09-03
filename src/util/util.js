@@ -124,11 +124,13 @@ util.g = function () {
 
 /** 封装cookie操作 */
 util.cookie = {};
+
 /**
  * 设置cookie
  */
 util.cookie.set = function (name, value, expires, domain, path, secure) {
   let cookieText = "";
+  value = JSON.stringify(value);
   cookieText += encodeURIComponent(name) + "=" + encodeURIComponent(value);
   if (expires instanceof Date) cookieText += "; expires=" + expires.toGMTString();
   if (path) cookieText += "; path=" + path;
@@ -136,7 +138,8 @@ util.cookie.set = function (name, value, expires, domain, path, secure) {
   if (secure) cookieText += "; secure";
   document.cookie = cookieText;
 };
-/**
+
+/** 
  * 获取cookie
  */
 util.cookie.get = function (name) {
@@ -150,8 +153,9 @@ util.cookie.get = function (name) {
     }
     cookieValue = decodeURIComponent(document.cookie.substring(cookieStart + cookieName.length, cookieEnd));
   }
-  return cookieValue;
+  return cookieValue ? JSON.parse(cookieValue) : "";
 };
+
 /**
  * 删除cookie
  */
