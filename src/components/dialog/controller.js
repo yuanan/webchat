@@ -74,7 +74,7 @@ export default {
       // 生成通道id
       this.cid = `CHANNEL_P2P_${util.min(fromUser.id, toUser.roleId)}-${util.max(fromUser.id, toUser.roleId)}_${util.min(toUser.uid, fromUser.uid)}_${util.max(toUser.uid, fromUser.uid)}`;
       // 获取存储在本地的消息
-      this.lid = `thindo.webchat.messages_${this.cid}`;
+      this.lid = `thindo.webchat.dialog.messages_${this.cid}`;
       let messages = store.get(this.lid) || [];
       this.messages = messages;
     },
@@ -94,7 +94,7 @@ export default {
       if (!this.content) return;
       this.messages.push({
         type: 'me',
-        content: this.content
+        content: this.parseContent(this.content)
       });
       this.sendMsg();
       this.$refs['message'].blur();
@@ -110,7 +110,7 @@ export default {
       if (data.content.body.text) {
         this.messages.push({
           type: 'other',
-          content: data.content.body.text
+          content: this.parseContent(data.content.body.text)
         });
         this.serverBack(data.content);
         this.toBottom();
@@ -165,6 +165,18 @@ export default {
         scope: 1
       }
       return params;
+    },
+
+    /**
+     * 解析内容
+     * @param {*} data 
+     */
+    parseContent(str) {
+      var re = /([a-zA-z]+:\/\/)?(([^\s]+)\.([^\s]+))/g;
+      var newContent = str.replace(re, function (a, b, c) {
+        return "<a href=\"http://".concat(c, "\" target=\"_blank\">").concat(a, "</a>");
+      });
+      return newContent;
     },
 
     toBottom() {

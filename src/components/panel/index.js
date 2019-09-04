@@ -1,7 +1,7 @@
 import template from './template';
 import util from '@/util/util';
 
-const libName = 'dialog';
+const libName = 'panel';
 
 export default {
   install(Vue, pkg, data) {

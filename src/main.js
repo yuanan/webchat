@@ -1,6 +1,8 @@
 import _Vue from 'vue';
 import Pomelo from '../../pomelo-webclient/index';
 import dialog from '@/components/dialog/index';
+import panel from '@/components/panel/index';
+
 import getUser from '@/services/getUser';
 import getServer from '@/services/getServer';
 
@@ -28,7 +30,15 @@ async function init (options = {}) {
     uid: userInfo.uid,
     version: "2.0.8"
   });
+  // 挂载 dialog
   dialog.install(Vue, window.thindoWebChat, {
+    pomelo,
+    ws,
+    userInfo,
+    iid
+  });
+  // 挂载 panel
+  panel.install(Vue, window.thindoWebChat, {
     pomelo,
     ws,
     userInfo,

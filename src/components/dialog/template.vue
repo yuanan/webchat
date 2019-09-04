@@ -12,7 +12,7 @@
       <div class="message-list">
         <ul>
           <li :class="i.type" v-for="(i, index) in messages" :key="index">
-            <div class="message-content">{{i.content}}</div>
+            <div class="message-content" v-html="i.content"></div>
           </li>
         </ul>
       </div>

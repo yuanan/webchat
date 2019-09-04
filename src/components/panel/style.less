@@ -1,0 +1,157 @@
+.webchat-panel {
+  font-family: "Poppins", Arial, sans-serif;
+  z-index: 2147482000;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    border-radius: 6px;
+    width: 90%;
+    height: 90%;
+    background-color: #ffffff;
+    z-index: 2147482001;
+
+    .head {
+      padding: 20px;
+      box-sizing: border-box;
+
+      &::after {
+        content: "";
+        clear: both;
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        display: block;
+      }
+
+      .title {
+        float: left;
+      }
+
+      .icon {
+        float: right;
+        margin-top: 1px;
+
+        svg {
+          path {
+            fill: @mainColor;
+          }
+        }
+      }
+    }
+
+    .body {
+      padding: 10px;
+      padding-top: 0px;
+      box-sizing: border-box;
+      height: calc(~"100% - 62px");
+      overflow: auto;
+
+      .message-list {
+        ul {
+          list-style: none;
+          padding: 0px;
+          margin: 0px;
+
+          li {
+            padding-left: 8px;
+            padding-right: 8px;
+            box-sizing: border-box;
+
+            &:last-child {
+              .item {
+                border: none;
+              }
+            }
+
+            .item {
+              padding-top: 15px;
+              border-bottom: 1px solid #f4f4f4;
+
+              .userInfo {
+                &::after {
+                  content: "";
+                  clear: both;
+                  height: 0;
+                  overflow: hidden;
+                  visibility: hidden;
+                  display: block;
+                }
+
+                .avatar {
+                  float: left;
+
+                  img {
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.14);
+                  }
+
+                }
+
+                .nickname {
+                  margin-left: 10px;
+                  float: left;
+                  font-size: 16px;
+                }
+
+                .time {
+                  float: right;
+                  color: #afafaf;
+                  font-size: 14px;
+                }
+              }
+
+              .content {
+                position: relative;
+                top: -20px;
+                padding-left: 55px;
+                padding-right: 40px;
+                font-size: 14px;
+                color: gray;
+
+                .com-text {}
+
+                .com-video {
+                  width: 100%;
+
+                  video {
+                    max-width: 100%;
+                    border-radius: 8px;
+                  }
+                }
+
+                .com-voice {
+                  padding-top: 10px;
+
+                  audio {
+                    width: 100%;
+                    height: 30px;
+                    appearance: none;
+                  }
+                }
+
+                .com-img {
+                  padding-top: 10px;
+
+                  img {
+                    width: 100%;
+                    border-radius: 8px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
