@@ -14,16 +14,13 @@
               <div class="item">
                 <div class="userInfo">
                   <div class="avatar">
-                    <img
-                      src="http://thirdwx.qlogo.cn/mmopen/vi_32/iaRuICOwCymMKjbxt4Gl0ibQtib2rUVjv1H58W96jZ5jFQGw1Nzz3Ptsia58M3aVTntmTAGZ3oMSiaNe9snhKvWXPIA/132"
-                      alt
-                    />
+                    <img :src="data.content.sender.avatar" />
                   </div>
-                  <div class="nickname">戴博</div>
-                  <div class="time">10:49</div>
+                  <div class="nickname">{{data.content.sender.nick_name}}</div>
+                  <div class="time">{{dateFormat(data.date, 'HH:mm')}}</div>
                   <div class="reply" @click="onReply(data)" v-if="data.content.body.type <= 4">回复</div>
                 </div>
-                <div class="content">
+                <div class="content" v-if="data.content && data.content.body">
                   <div class="com-text" v-if="data.content.body.type == 1">
                     <div v-html="data.content.body.text"></div>
                   </div>

@@ -9,6 +9,7 @@ export default {
 
   data() {
     return {
+      dateFormat: util.dateFormat,
       isShow: false,
       messages: [],
       onMessageCallBack: [],

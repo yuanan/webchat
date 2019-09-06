@@ -13,7 +13,7 @@
       <div class="message-list">
         <ul>
           <li :class="data.type" v-for="(data, index) in messages" :key="index">
-            <div class="message-content">
+            <div class="message-content" v-if="data.content && data.content.body">
               <div class="com-text" v-if="data.content.body.type == 1">
                 <div v-html="data.content.body.text"></div>
               </div>
