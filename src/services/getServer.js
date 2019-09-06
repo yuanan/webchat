@@ -9,7 +9,7 @@ async function getServer(userInfo) {
   let ws = await pomelo.init({
     host: 'gate.huaxiyou.cc',
     port: '3014',
-    scheme: 'ws',
+    scheme: 'wss',
     log: true
   });
   let data = await pomelo.request(

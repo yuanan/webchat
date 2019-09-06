@@ -17,7 +17,7 @@ async function init (options = {}) {
   let ws = await pomelo.init({
     host: serverInfo.host,
     port: serverInfo.port,
-    scheme: 'ws',
+    scheme: 'wss',
     log: true
   });
   console.log('userInfo', userInfo);
