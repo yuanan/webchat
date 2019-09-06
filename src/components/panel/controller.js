@@ -11,6 +11,7 @@ export default {
     return {
       isShow: false,
       messages: [],
+      onMessageCallBack: [],
       lid: `thindo.webchat.panel.messages`
     }
   },
@@ -39,12 +40,17 @@ export default {
     show(options) {
       try {
         this.isShow = true;
-        this.getMessages();
+        let ids = this.getMessages();
+        this.serverBack(ids);
       } catch (error) {
         alert(JSON.stringify(error));
       }
     },
-    
+
+    onMessage(callback) {
+      this.onMessageCallBack.push(callback);
+    },
+
     /**
      * 隐藏面板
      */
@@ -61,6 +67,11 @@ export default {
       let messages = store.get(this.lid) || [];
       console.log('messages', messages);
       this.messages = messages;
+      let ids = [];
+      this.messages.forEach(m => {
+        ids.push(m.content.tempID);
+      });
+      return ids;
     },
 
     /**
@@ -68,7 +79,10 @@ export default {
      */
     getMsg(data) {
       let type = data.content.body.type;
-      if (type === 1 || type === 2 || type === 3 || type === 4 ) {
+      if (type === 1 || type === 2 || type === 3 || type === 4) {
+        for (const callback of this.onMessageCallBack) {
+          if (typeof callback === 'function') callback(data);
+        }
         if (type === 1) {
           data.content.body.text = this.parseContent(data.content.body.text);
         }
@@ -96,6 +110,31 @@ export default {
         return "<a href=\"http://".concat(c, "\" target=\"_blank\">").concat(a, "</a>");
       });
       return newContent;
+    },
+
+    /**
+     * 回复某条消息
+     */
+    onReply(data) {
+      let lid = `thindo.webchat.dialog.messages_${data.cid}`;
+      let messages = store.get(lid) || [];
+      if (messages.length === 0) {
+        messages.push({
+          type: 'other',
+          content: data.content
+        });
+        store.set(lid, messages);
+      }
+      this.isShow = false;
+      // 显示聊天窗口
+      window.thindoWebChat.dialog.show({
+        receiver: {
+          roleId: data.content.sender.roleID,
+          uid: data.content.sender.uid,
+          nickName: data.content.sender.nick_name
+        }
+      });
     }
+
   }
 }

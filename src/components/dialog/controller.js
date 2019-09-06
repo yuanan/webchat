@@ -90,13 +90,16 @@ export default {
     /**
      * 发送消息按钮事件
      */
-    onSendMsg() {
+    async onSendMsg() {
       if (!this.content) return;
+      let params = this.getSendParams();
+      await this.sendMsg(params);
+      params.content.body.text = this.parseContent(params.content.body.text);
       this.messages.push({
         type: 'me',
-        content: this.parseContent(this.content)
+        content: params.content
       });
-      this.sendMsg();
+      console.log('this.messages', this.messages);
       this.$refs['message'].blur();
       this.content = '';
       this.toBottom();
@@ -107,10 +110,14 @@ export default {
      * 监听服务器的消息
      */
     getMsg(data) {
-      if (data.content.body.text) {
+      let type = data.content.body.type;
+      if (type === 1 || type === 2 || type === 3 || type === 4) {
+        if (type === 1) {
+          data.content.body.text = this.parseContent(data.content.body.text);
+        }
         this.messages.push({
           type: 'other',
-          content: this.parseContent(data.content.body.text)
+          content: data.content
         });
         this.serverBack(data.content);
         this.toBottom();
@@ -129,8 +136,7 @@ export default {
     /**
      * 发送消息到服务器
      */
-    async sendMsg() {
-      let params = this.getSendParams();
+    async sendMsg(params) {
       // console.log('params', params);
       let data = await this.pomelo.request('chat.chatHandler.send', params);
       // console.log(data);

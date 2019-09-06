@@ -9,7 +9,7 @@ import getServer from '@/services/getServer';
 // 主入口函数
 async function init (options = {}) {
   const Vue = options.Vue || _Vue;
-  let userInfo = await getUser(options.userId, options.iid);
+  let userInfo = await getUser(options.userId , options.iid);
   let serverInfo = await getServer(userInfo);
   let pomelo = new Pomelo();
   let iid = options.iid || 1000;

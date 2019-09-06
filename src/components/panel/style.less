@@ -76,6 +76,8 @@
               border-bottom: 1px solid #f4f4f4;
 
               .userInfo {
+                position: relative;
+
                 &::after {
                   content: "";
                   clear: both;
@@ -108,6 +110,14 @@
                   color: #afafaf;
                   font-size: 14px;
                 }
+
+                .reply {
+                  position: absolute;
+                  top: 25px;
+                  right: 0px;
+                  font-size: 14px;
+                  z-index: 100;
+                }
               }
 
               .content {
@@ -117,8 +127,6 @@
                 padding-right: 40px;
                 font-size: 14px;
                 color: gray;
-
-                .com-text {}
 
                 .com-video {
                   width: 100%;
@@ -146,6 +154,10 @@
                     width: 100%;
                     border-radius: 8px;
                   }
+                }
+
+                .com-card {
+                  
                 }
               }
             }
