@@ -15,8 +15,8 @@ async function init (options = {}) {
   let iid = options.iid || 1000;
   // 建立真正的连接
   let ws = await pomelo.init({
-    host: serverInfo.host,
-    port: serverInfo.port,
+    host: 'm.huaxiyou.cc', //serverInfo.host,
+    port: '3051', // serverInfo.port,
     scheme: 'wss',
     log: true
   });
