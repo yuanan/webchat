@@ -56,17 +56,25 @@ export default {
         this.isShow = true;
         // 获取本地存储的数据
         this.getMessages();
-        if (this.unReadMsg && this.unReadMsg.length) {
-          this.unReadMsg.forEach(msg => {
-            this.getMsg(msg)
-          });
-        }
+        this.getUnReadMsg();
         this.toBottom();
         document.body.addEventListener('contextmenu', function (e) {
           e.preventDefault();
         });
       } catch (error) {
         alert(JSON.stringify(error));
+      }
+    },
+
+    /**
+     * 获取未读消息
+     */
+    getUnReadMsg() {
+      if (this.unReadMsg && this.unReadMsg.length) {
+        this.unReadMsg.forEach(msg => {
+          this.getMsg(msg)
+        });
+        this.unReadMsg = [];
       }
     },
 
@@ -115,7 +123,7 @@ export default {
      * 监听服务器的消息
      */
     getMsg(data) {
-      console.log('getMsg', data);
+      console.log('dialog getMsg', data);
       let type = data.content.body.type;
       if (type === 1 || type === 2 || type === 3 || type === 4) {
         if (type === 1) {

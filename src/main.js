@@ -21,10 +21,7 @@ async function init (options = {}) {
     log: true
   });
   console.log('userInfo', userInfo);
-  console.log('pomelo', pomelo);
-  console.log('pomelo.pomelo', pomelo.pomelo);
   // 登录
-  // userInfo.uid = '105201';
   let data = await pomelo.request('connector.entryHandler.enter', {
     apnToken: "",
     bundle: `com.fingerall.app${iid}`,
@@ -32,7 +29,6 @@ async function init (options = {}) {
     uid: userInfo.uid,
     version: "2.0.8"
   });
-  console.log('data', data);
   // 挂载 dialog
   dialog.install(Vue, window.thindoWebChat, {
     pomelo,

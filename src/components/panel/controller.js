@@ -30,6 +30,7 @@ export default {
   mounted() {
     // 监听消息
     this.pomelo.pemelo.on('onMessage', this.getMsg);
+    this.getUnReadMsg();
   },
 
   methods: {
@@ -42,17 +43,29 @@ export default {
       try {
         this.isShow = true;
         let ids = this.getMessages();
-        if (this.unReadMsg && this.unReadMsg.length) {
-          this.unReadMsg.forEach(msg => {
-            this.getMsg(msg)
-          });
-        }
+        this.getUnReadMsg();
         this.serverBack(ids);
       } catch (error) {
         alert(JSON.stringify(error));
       }
     },
 
+    /**
+     * 获取未读消息
+     */
+    getUnReadMsg() {
+      if (this.unReadMsg && this.unReadMsg.length) {
+        this.unReadMsg.forEach(msg => {
+          this.getMsg(msg)
+        });
+        this.unReadMsg = [];
+      }
+    },
+    
+    /**
+     * 外部监听接口
+     * @param {*} callback 
+     */
     onMessage(callback) {
       this.onMessageCallBack.push(callback);
     },
@@ -68,10 +81,8 @@ export default {
      * 获取本地存储的数据
      */
     getMessages() {
-      // 获取存储在本地的消息
       this.lid = `thindo.webchat.panel.messages`;
       let messages = store.get(this.lid) || [];
-      console.log('messages', messages);
       this.messages = messages;
       let ids = [];
       this.messages.forEach(m => {
@@ -93,7 +104,6 @@ export default {
           data.content.body.text = this.parseContent(data.content.body.text);
         }
         this.messages.push(data);
-        console.log('this.messages', this.messages);
       }
     },
 
