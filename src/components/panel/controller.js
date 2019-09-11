@@ -42,6 +42,11 @@ export default {
       try {
         this.isShow = true;
         let ids = this.getMessages();
+        if (this.unReadMsg && this.unReadMsg.length) {
+          this.unReadMsg.forEach(msg => {
+            this.getMsg(msg)
+          });
+        }
         this.serverBack(ids);
       } catch (error) {
         alert(JSON.stringify(error));

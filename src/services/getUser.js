@@ -8,10 +8,14 @@ async function getUser(userId, iid = 1000) {
   return new Promise((resolve, reject) => {
     let userInfo = util.cookie.get('userInfo');
     let url = '';
+    let domain = 'https://m.huaxiyou.cc/';
+    if ( window.location.host === 'localhost:8080' ) {
+      domain = 'http://yun.huaxiyou.cc/';
+    }
     if (userId) {
-      url = `http://yun.huaxiyou.cc/getUserInfo?userId=${userId}&iid=${iid}`;
+      url = `${domain}getUserInfo?userId=${userId}&iid=${iid}`;
     } else {
-      url = `http://yun.huaxiyou.cc/getUserInfo?uniqId=1&iid=${iid}`;
+      url = `${domain}getUserInfo?uniqId=1&iid=${iid}`;
     }
     if (userInfo) {
       resolve(userInfo);
