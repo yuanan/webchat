@@ -1,5 +1,5 @@
 <template>
-  <div class="webchat-panel" v-if="isShow" ref="panel">
+  <div class="webchat-panel" v-show="isShow" ref="panel">
     <div class="card">
       <div class="head">
         <span class="title">消息列表</span>
@@ -7,7 +7,7 @@
           <svg-close></svg-close>
         </span>
       </div>
-      <div class="body">
+      <div class="body" ref="content">
         <div class="message-list">
           <ul>
             <li v-for="(data, index) in messages" :key="index">
@@ -21,7 +21,7 @@
                   <div class="reply" @click="onReply(data)" v-if="data.content.body.type <= 4">回复</div>
                 </div>
                 <div class="content" v-if="data.content && data.content.body">
-                  <div class="com-text" v-if="data.content.body.type == 1">
+                  <div class="com-text" v-if="data.content.body.type == 1 || data.content.body.type == 10">
                     <div v-html="data.content.body.text"></div>
                   </div>
                   <div class="com-img" v-if="data.content.body.type == 2">
@@ -33,12 +33,14 @@
                   <div class="com-video" v-if="data.content.body.type == 4">
                     <video :src="data.content.body.videoUrl" :poster="data.content.body.videoImageUrl" controls="controls" ></video>
                   </div>
-                  <div class="com-card" v-if="false">
+                  <div class="com-card" v-if="data.content.body.type == 11" @click="goResource(data)">
                     <div class="poster">
-                      <img src="" alt="">
+                      <img :src="data.content.body.operateCardString.imgUrl" alt="">
                     </div>
                     <div class="text">
-                      12313123123213
+                      <p>
+                        {{data.content.body.operateCardString.title}}
+                      </p>
                     </div>
                   </div>
                 </div>
