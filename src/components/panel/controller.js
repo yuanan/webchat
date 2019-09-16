@@ -1,6 +1,7 @@
 import svgClose from '@/svg/close';
 import util from '@/util/util';
 import store from '@/lib/store';
+import getResUrl from '@/services/getResUrl.js';
 
 export default {
   components: {
@@ -257,7 +258,13 @@ export default {
      * 前往资源
      */
     goResource(data) {
-
+      let action = data.content.body.operateCardString;
+      let url = getResUrl({
+        action,
+        iid: this.iid
+      });
+      window.location.href = url;
+      //window.open(url);
     },
 
     /**
