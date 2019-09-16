@@ -177,7 +177,8 @@ export default {
      */
     parseContent(str) {
       let re = /([a-zA-z]+:\/\/)?(([^\s]+)\.([^\s]+))/g;
-      if (re && re.length > 1) {
+      let res = str.match(re);
+      if (res && res.length > 1) {
         let newContent = str.replace(re, function (a, b, c) {
           return "<a href=\"http://".concat(c, "\" target=\"_blank\">").concat(a, "</a>");
         });

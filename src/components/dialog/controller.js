@@ -56,6 +56,10 @@ export default {
         this.messages = localMessages;
         console.log('得到的本地存储的消息', localMessages);
         this.isShow = true;
+        if (this.isNeedPre === true) {
+          this.content = `【${document.getElementsByTagName('title')[0].innerText}】${window.location.href}`;
+          this.onSendMsg();
+        }
         this.toBottom();
         document.body.addEventListener('contextmenu', function (e) {
           e.preventDefault();
@@ -259,7 +263,8 @@ export default {
      */
     parseContent(str) {
       let re = /([a-zA-z]+:\/\/)?(([^\s]+)\.([^\s]+))/g;
-      if (re && re.length > 1) {
+      let res = str.match(re);
+      if (res && res.length > 1) {
         let newContent = str.replace(re, function (a, b, c) {
           return "<a href=\"http://".concat(c, "\" target=\"_blank\">").concat(a, "</a>");
         });

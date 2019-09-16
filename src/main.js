@@ -35,6 +35,7 @@ async function init(options = {}) {
     ws,
     userInfo,
     iid,
+    isNeedPre: options.isNeedPre || false,
     onPublicMessage: options.onMessage || '',
     onClose: function() {
       console.log('关闭连接');
