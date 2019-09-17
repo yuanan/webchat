@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="message-area" @touchstart="focus">
-      <textarea ref="message" name="message" id="message" placeholder="写些什么..." v-model="content"></textarea>
+      <textarea ref="message" name="message" id="message" placeholder="写些什么..." v-model="content" @keyup.enter.native="onSendMsg"></textarea>
       <div class="btn-send" @click="onSendMsg">
         <svg-send></svg-send>
       </div>

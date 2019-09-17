@@ -176,15 +176,27 @@ export default {
      * @param {*} data 
      */
     parseContent(str) {
-      let re = /([a-zA-z]+:\/\/)?(([^\s]+)\.([^\s]+))/g;
-      let res = str.match(re);
-      if (res && res.length > 1) {
-        let newContent = str.replace(re, function (a, b, c) {
-          return "<a href=\"http://".concat(c, "\" target=\"_blank\">").concat(a, "</a>");
-        });
-        return newContent;
+      if (str.indexOf('<a>') !== -1) {
+        let res = str.match(/<a>(.+)<\/a>/g);
+        let tempStr = '';
+        if (res.length) {
+          res.forEach(item => {
+            let obj = item.replace('<a>', '').replace('</a>', '');
+            tempStr += obj.con;
+          });
+        }
+        return tempStr;
       } else {
-        return str;
+        let re = /([a-zA-z]+:\/\/)?(([^\s]+)\.([^\s]+))/g;
+        let res = str.match(re);
+        if (res && res.length > 1) {
+          let newContent = str.replace(re, function (a, b, c) {
+            return "<a href=\"http://".concat(c, "\" target=\"_blank\">").concat(a, "</a>");
+          });
+          return newContent;
+        } else {
+          return str;
+        }
       }
     },
 

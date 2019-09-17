@@ -17,7 +17,7 @@
                     <img :src="data.content.sender.avatar" />
                   </div>
                   <div class="nickname">{{data.content.sender.nick_name}}</div>
-                  <div class="time">{{dateFormat(data.date, 'MM-DD hh:mm')}}</div>
+                  <div class="time">{{dateFormat(data.date, 'MM-dd hh:mm')}}</div>
                   <div class="reply" @click="onReply(data)" v-if="data.content.body.type <= 4">回复</div>
                 </div>
                 <div class="content" v-if="data.content && data.content.body">
