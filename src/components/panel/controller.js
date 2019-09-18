@@ -12,6 +12,7 @@ export default {
     return {
       dateFormat: util.dateFormat,
       isShow: false,
+      showOptions: '',
       messages: [],
       onMessageCallBack: [],
       lid: `thindo.webchat.panel.messages`
@@ -26,7 +27,7 @@ export default {
   mounted() {
     // 监听消息
     this.pomelo.pemelo.on('onMessage', this.onMsg);
-    this.pomelo.pemelo.on('onClose', this.onClose);
+    this.pomelo.pemelo.on('close', this.onClose.bind(this));
     // this.pomelo.pomelo.on('onClose', this.onClose);
   },
 
@@ -35,7 +36,8 @@ export default {
      * 显示面板
      * @param {*} options 
      */
-    show(options = {}) {
+    show(options) {
+      this.showOptions = options;
       try {
         let localMessages = this.getLocalMessages();
         console.log('得到的本地存储的消息', localMessages);

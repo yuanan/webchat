@@ -12,6 +12,7 @@ export default {
   data() {
     return {
       isShow: false,
+      showOptions: '',
       state: 1, // 1 待发送状态 2 输入中状态
       content: '',
       messages: [],
@@ -27,6 +28,7 @@ export default {
   },
 
   mounted() {
+    console.log(this);
     // 监听消息
     this.pomelo.pemelo.on('onMessage', this.getMsg);
   },
@@ -50,6 +52,7 @@ export default {
      * @param {*} options 
      */
     show(options) {
+      this.showOptions = options;
       try {
         this.receiver = options.receiver || {};
         let localMessages = this.getLocalMessages();

@@ -10,7 +10,7 @@ import getServer from '@/services/getServer';
 async function init(options = {}) {
   const Vue = options.Vue || _Vue;
   let userInfo = await getUser(options.userId, options.iid);
-  let serverInfo = await getServer(userInfo);
+  // let serverInfo = await getServer(userInfo);
   let pomelo = new Pomelo();
   let iid = options.iid || 1000;
   // 建立真正的连接
@@ -18,27 +18,30 @@ async function init(options = {}) {
     host: 'gate.huaxiyou.cc', //serverInfo.host,
     port: '3051', // serverInfo.port,
     scheme: 'wss',
-    log: true,
-    reconnect: true
+    log: true
   });
   console.log('userInfo', userInfo);
   // 登录
-  let data = await pomelo.request('connector.entryHandler.enter', {
-    apnToken: "",
-    bundle: `com.fingerall.app${iid}`,
-    token: userInfo.ridSecret,
-    uid: userInfo.uid,
-    version: "2.0.8"
-  });
+  async function enter() {
+    let data = await pomelo.request('connector.entryHandler.enter', {
+      apnToken: "",
+      bundle: `com.fingerall.app${iid}`,
+      token: userInfo.ridSecret,
+      uid: userInfo.uid,
+      version: "2.0.8"
+    });
+    return data;
+  }
+  let data = await enter();
   let vueData = {
     pomelo,
     ws,
     userInfo,
-    iid,
+    iid: Number(iid),
     isNeedPre: options.isNeedPre || false,
     onPublicMessage: options.onMessage || '',
     onClose: function() {
-      console.log('关闭连接');
+      init(options);
     }
   };
   // 挂载 dialog
