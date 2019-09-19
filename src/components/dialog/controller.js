@@ -81,6 +81,10 @@ export default {
         this.unReadMsg.forEach(msg => {
           console.log('解析未读消息', msg);
           if (msg.content.body) {
+            let type = msg.content.body.type;
+            if (type === 1 || type === 10) {
+              msg.content.body.text = this.parseContent(msg.content.body.text);
+            }
             let item = {
               type: 'other',
               content: msg.content

@@ -59,6 +59,10 @@ export default {
           if (!m.content.body) {
             unReadMsg.push(this.toTextObj(m));
           } else {
+            let type = m.content.body.type;
+            if (type === 1 || type === 10) {
+              m.content.body.text = this.parseContent(m.content.body.text);
+            }
             unReadMsg.push(m);
           }
         });
@@ -183,7 +187,7 @@ export default {
         let tempStr = '';
         if (res.length) {
           res.forEach(item => {
-            let obj = item.replace('<a>', '').replace('</a>', '');
+            let obj = JSON.parse(item.replace('<a>', '').replace('</a>', ''));
             tempStr += obj.con;
           });
         }

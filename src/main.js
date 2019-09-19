@@ -40,8 +40,10 @@ async function init(options = {}) {
     iid: Number(iid),
     isNeedPre: options.isNeedPre || false,
     onPublicMessage: options.onMessage || '',
-    onClose: function() {
-      init(options);
+    onClose: function(e) {
+      if (e.code === 1006) {
+        init(options);
+      }
     }
   };
   // 挂载 dialog
