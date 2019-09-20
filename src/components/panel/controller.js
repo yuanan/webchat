@@ -183,17 +183,21 @@ export default {
      */
     parseContent(str) {
       if (str.indexOf('<a>') !== -1) {
-        let res = str.match(/<a>(.+)<\/a>/g);
+        let strArray = str.split('<a>');
         let tempStr = '';
-        if (res.length) {
-          res.forEach(item => {
-            let obj = JSON.parse(item.replace('<a>', '').replace('</a>', ''));
-            tempStr += obj.con;
-          });
-        }
+        strArray.forEach(item => {
+          let _str = '';
+          if (item.indexOf('</a>') !== -1) {
+            let _arr = item.split('</a>');
+            _str = JSON.parse(_arr[0]).con + _arr[1];
+          } else {
+            _str = item;
+          }
+          tempStr += _str;
+        });
         return tempStr;
       } else {
-        let re = /([a-zA-z]+:\/\/)?(([^\s]+)\.([^\s]+))/g;
+        let re = /(https?|http|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/g;
         let res = str.match(re);
         if (res && res.length > 1) {
           let newContent = str.replace(re, function (a, b, c) {
